@@ -1,4 +1,4 @@
-import * as userModel from "../models/userModel.js";
+import * as userModel from "../model/userModel.js";
 
 const register = async (req, res) => {
     const registerData = { ...req.body };

@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import Joi, { required } from "joi";
+import Joi from "joi";
 
 const userSchema = new Schema({
     mail: {
@@ -46,14 +46,14 @@ userSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.joiValidate = (user) => {
-  const schema = Joi.object({
-    mail: Joi.string().email().required(),
-    username: Joi.string().min(8).max(30).required(),
-    password: Joi.string().min(8).max(30).regex(/[a-zA-Z0-9]{3,30}/).required(),
-    role: Joi.number().max(0).min(2).required()
-  });
-  return schema.validate(user);
-};
+// userSchema.methods.joiValidate = (user) => {
+//   const schema = Joi.object({
+//     mail: Joi.string().email().required(),
+//     username: Joi.string().min(8).max(30).required(),
+//     password: Joi.string().min(8).max(30).regex(/[a-zA-Z0-9]{3,30}/).required(),
+//     role: Joi.number().max(0).min(2).required()
+//   });
+//   return schema.validate(user);
+// };
 
 export default mongoose.model('User', userSchema);
