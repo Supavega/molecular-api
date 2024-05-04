@@ -3,7 +3,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-import * as userController from "./controller/userController.js"
+import * as userController from "./controller/userController.js";
+import * as workspaceController from "./controller/workspaceController.js";
 
 
 dotenv.config();
@@ -19,9 +20,19 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+//GET Routes
+app.get("/workspace", workspaceController.getWorkspace);
+app.get("/workspace/:id", workspaceController.getSpecificWorkspace);
+
 //POST Routes
 app.post("/register", userController.register);
 app.post("/login", userController.login);
+app.post("/workspace", workspaceController.createWorkspace);
+
+
+//DELETE Routes
+app.delete("/workspace", workspaceController.deleteWorkspace);
+
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("Connexion à MongoDB réussie !"))
