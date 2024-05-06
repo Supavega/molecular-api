@@ -16,7 +16,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const result = await userModel.loginUser(req.body);
-        res.header("Authorization", `Bearer ${result.token}`);
+        res.setHeader("Authorization", `Bearer ${result.token}`);
         res.json({ message: "Logged in successfully", user: result.user});
     } catch (err) {
         res.status(400).json({message: err.message});

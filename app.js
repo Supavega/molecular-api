@@ -13,13 +13,12 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(cors({
-//   origin: "http://localhost:3000",
-//   credentials: true,
-//   exposedHeaders: ['Authorization'],
-// }));
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Authorization']
+}));
 
 //GET Routes
 app.get("/workspace", jwtVerify, workspaceController.getWorkspace);
