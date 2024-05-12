@@ -10,9 +10,15 @@ export const getWorkspace = async (userId) => {
   return result;
 };
 
-
-
 export const deleteWorkspace = async (workspaceId) => {
   await Workspace.findByIdAndDelete({ workspaceId });
 };
 
+export const updateWorkspace = async (workspaceId, data) => {
+  await Workspace.findByIdAndUpdate(workspaceId, data);
+};
+
+export const getWorkspaceById = async (workspaceId) => {
+  const result = await Workspace.findById(workspaceId);
+  return result;
+}

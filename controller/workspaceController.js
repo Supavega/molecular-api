@@ -39,3 +39,30 @@ export const deleteWorkspace = async(req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+export const updateWorkspace = async(req, res) => {
+  const workspaceId = req.body.workspaceId;
+  const workspaceData = { ...req.body };
+  try{
+    const updateWorkspace = await workspaceModel.updateWorkspace(workspaceId, workspaceData);
+    res.status(200).send({
+      message: "Workspace successfully updated",
+      data: updateWorkspace
+    })
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+export const getWorkspaceById = async(req, res) => {
+  const workspaceId = req.params.id;
+  try{
+    const workspace = await workspaceModel.getWorkspaceById(workspaceId);
+    res.status(200).send({
+      message: "Workspace successfully retrieved",
+      data: workspace
+    })
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};

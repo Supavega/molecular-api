@@ -22,6 +22,7 @@ app.use(cors({
 
 //GET Routes
 app.get("/workspace", jwtVerify, workspaceController.getWorkspace);
+app.get("/workspace/:id", jwtVerify, workspaceController.getWorkspaceById);
 
 //POST Routes
 app.post("/register", userController.register);
@@ -31,6 +32,9 @@ app.post("/workspace", jwtVerify, workspaceController.createWorkspace);
 
 //DELETE Routes
 app.delete("/workspace", jwtVerify, workspaceController.deleteWorkspace);
+
+//PUT Routes
+app.put("/workspace", jwtVerify, workspaceController.updateWorkspace);
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("Connexion à MongoDB réussie !"))
