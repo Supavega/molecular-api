@@ -5,7 +5,9 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import * as userController from "./controller/userController.js";
 import * as workspaceController from "./controller/workspaceController.js";
+import * as fileController from "./controller/fileController.js";
 import jwtVerify from "./middleware/jwtVerify.js";
+
 
 
 dotenv.config();
@@ -22,11 +24,13 @@ app.use(cors({
 
 //GET Routes
 app.get("/workspace", jwtVerify, workspaceController.getWorkspace);
+app.get("/file" , jwtVerify, fileController.getFiles);
 
 //POST Routes
 app.post("/register", userController.register);
 app.post("/login", userController.login);
 app.post("/workspace", jwtVerify, workspaceController.createWorkspace);
+app.post("/file/create", jwtVerify , fileController.createFile);
 
 
 //DELETE Routes
