@@ -24,8 +24,9 @@ app.use(cors({
 
 //GET Routes
 app.get("/workspace", jwtVerify, workspaceController.getWorkspace);
-app.get("/file" , jwtVerify, fileController.getFiles);
 app.get("/workspace/:id", jwtVerify, workspaceController.getWorkspaceById);
+app.get("/file" , jwtVerify, fileController.getFiles);
+app.get("/file/:id", jwtVerify, fileController.getFileById);
 
 //POST Routes
 app.post("/register", userController.register);
@@ -36,9 +37,11 @@ app.post("/file/create", jwtVerify , fileController.createFile);
 
 //DELETE Routes
 app.delete("/workspace", jwtVerify, workspaceController.deleteWorkspace);
+app.delete("/file", jwtVerify, fileController.deleteFile);
 
 //PUT Routes
 app.put("/workspace", jwtVerify, workspaceController.updateWorkspace);
+app.put("/file", jwtVerify, fileController.updateFile);
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("Connexion à MongoDB réussie !"))

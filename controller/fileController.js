@@ -52,3 +52,17 @@ export const updateFile = async (req, res) => {
     res.status(400).json({message: err.message});
   }
 }
+
+export const getFileById = async (req, res) => {
+  const FileId = req.params.id;
+  try {
+    const file = await filemodel.getFileById(FileId);
+    res.status(200).send({
+      message: "File successfully retrieved",
+      data: file
+    })
+  } catch (err) {
+    res.status(400).json({message: err.message});
+  }
+
+}

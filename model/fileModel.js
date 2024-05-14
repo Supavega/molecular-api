@@ -20,5 +20,11 @@ export const updateFile = async (fileId, data) => {
 }
 
 export const getFiles = async (workspaceId) => {
-  return await File.find({workspaceid: workspaceId});
+  const result = await File.find({workspaceid: workspaceId});
+  return result;
+}
+
+export const getFileById = async (fileId) => {
+  const result = await File.findById(fileId);
+  return result;
 }
