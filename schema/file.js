@@ -6,6 +6,16 @@ const fileSchema = new Schema ({
     type: String, 
     required: true,
   },
+  content: {
+    type: String,
+    default: "",
+  },
+  creationDate: {
+    type: Date,
+  },
+  lastModificationDate: {
+    type: Date,
+  },
   workspaceid: {
     type: String,
   }
