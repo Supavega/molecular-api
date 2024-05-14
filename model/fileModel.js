@@ -6,16 +6,19 @@ import jwt from "jsonwebtoken";
 
 dotenv.config();
 
-const createFile = (fileData) => {
-    const newFile = new User(fileData);
-    newFile.save();
+export const createFile = (fileData) => {
+  const newFile = new User(fileData);
+  newFile.save();
 };
 
-const getFiles = async (workspaceId) => {
-    return await File.find({workspaceid: workspaceId});
+export const deleteFile = async (fileId) => {
+  await File.findByIdAndDelete({ fileId });
 }
 
-export { 
-    createFile,
-    getFiles
+export const updateFile = async (fileId, data) => {
+	await File.findByIdAndUpdate(fileId, data);
+}
+
+export const getFiles = async (workspaceId) => {
+  return await File.find({workspaceid: workspaceId});
 }
