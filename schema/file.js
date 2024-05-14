@@ -8,6 +8,7 @@ const fileSchema = new Schema ({
   },
   content: {
     type: String,
+    default: "",
   },
   creationDate: {
     type: Date,
