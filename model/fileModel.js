@@ -28,3 +28,7 @@ export const getFileById = async (fileId) => {
   const result = await File.findById(fileId);
   return result;
 }
+
+export const getAllFiles = async () => {
+  return await File.find();
+}

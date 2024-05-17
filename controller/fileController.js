@@ -1,4 +1,5 @@
 import * as filemodel from "../model/fileModel.js";
+import file from "../schema/file.js";
 
 export const createFile = async (req, res) => {
   const fileData = { ...req.body };
@@ -64,5 +65,16 @@ export const getFileById = async (req, res) => {
   } catch (err) {
     res.status(400).json({message: err.message});
   }
+}
 
+export const getAllFiles = async (req, res) => {
+  try {
+    const files = await filemodel.getAllFiles();
+    res.status(200).send({
+      message: "Files successfully retrieved",
+      data: files
+    })
+  } catch (err) {
+    res.status(400).json({message: err.message});
+  }
 }

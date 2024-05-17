@@ -27,6 +27,7 @@ app.get("/workspace", jwtVerify, workspaceController.getWorkspace);
 app.get("/workspace/:id", jwtVerify, workspaceController.getWorkspaceById);
 app.get("/file" , jwtVerify, fileController.getFiles);
 app.get("/file/:id", jwtVerify, fileController.getFileById);
+app.get("/fileAll", jwtVerify, fileController.getAllFiles);
 
 //POST Routes
 app.post("/register", userController.register);
