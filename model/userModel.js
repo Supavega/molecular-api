@@ -33,6 +33,54 @@ const loginUser = async (userData) => {
     }
 };
 
+const updateUser = async (userData) => {
+    try {
+        const USERNAME = userData.username;
+        const MAIL = userData.mail;
+        const PASSWORD = userData.password;
+
+        const USERID = userData.userId;
+
+        console.log(userData);
+
+        const filter = {
+            _id: USERID
+        };
+
+        const user = await User.findOne(filter);
+
+        console.log(user);
+        
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        if (!PASSWORD) {
+            throw new Error("No password provided");
+        }
+
+        const passwordMatch = await bcrypt.compare(PASSWORD, user.password);
+        if (!passwordMatch) {
+            throw new Error("Password not matching");
+        }
+
+        const newUser = {
+            username: (USERNAME) ? USERNAME : user.username,
+            mail: (MAIL) ? MAIL : user.mail,
+            password: user.password,
+            createdAt: user.createdAt,
+            updatedAt: Date.now()
+        }
+        
+        await User.findOneAndUpdate(filter, newUser);
+
+        return user;
+    } catch (error) {
+        console.error(error);
+        return { error: "Update failed" };
+    }
+};
+
 const generateAuthToken = (user) => {
     const token = jwt.sign({ _id: user._id.toString()}, process.env.SECRET_KEY);
     return token;
@@ -41,5 +89,6 @@ const generateAuthToken = (user) => {
 export {
     createUser,
     loginUser,
+    updateUser,
     generateAuthToken
 }

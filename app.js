@@ -27,6 +27,7 @@ app.get("/workspace/:id", jwtVerify, workspaceController.getWorkspaceById);
 //POST Routes
 app.post("/register", userController.register);
 app.post("/login", userController.login);
+app.post("/update", jwtVerify, userController.update);
 app.post("/workspace", jwtVerify, workspaceController.createWorkspace);
 
 
