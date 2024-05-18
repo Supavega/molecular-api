@@ -36,20 +36,18 @@ const loginUser = async (userData) => {
 const updateUser = async (userData) => {
     try {
         const USERNAME = userData.username;
+        const NEWPASSWORD = userData.newPassword;
+        const NEWPASSWORDCONFIRM = userData.newPasswordConfirm;
         const MAIL = userData.mail;
         const PASSWORD = userData.password;
 
         const USERID = userData.userId;
-
-        console.log(userData);
 
         const filter = {
             _id: USERID
         };
 
         const user = await User.findOne(filter);
-
-        console.log(user);
         
         if (!user) {
             throw new Error("User not found");
@@ -59,15 +57,22 @@ const updateUser = async (userData) => {
             throw new Error("No password provided");
         }
 
+        if (NEWPASSWORD && NEWPASSWORD !== NEWPASSWORDCONFIRM) {
+            throw new Error("New passwords do not match");
+        }
+
         const passwordMatch = await bcrypt.compare(PASSWORD, user.password);
         if (!passwordMatch) {
             throw new Error("Password not matching");
         }
 
+        const SALT = await bcrypt.genSalt();
+        const ENCRYPTEDNEWPASSWORD = await bcrypt.hash(NEWPASSWORD, SALT);
+
         const newUser = {
-            username: (USERNAME) ? USERNAME : user.username,
-            mail: (MAIL) ? MAIL : user.mail,
-            password: user.password,
+            username: USERNAME ? USERNAME : user.username,
+            mail: MAIL ? MAIL : user.mail,
+            password: NEWPASSWORD ? ENCRYPTEDNEWPASSWORD : user.password,
             createdAt: user.createdAt,
             updatedAt: Date.now()
         }
