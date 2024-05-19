@@ -32,6 +32,7 @@ app.get("/fileAll", jwtVerify, fileController.getAllFiles);
 //POST Routes
 app.post("/register", userController.register);
 app.post("/login", userController.login);
+app.post("/update", jwtVerify, userController.update);
 app.post("/workspace", jwtVerify, workspaceController.createWorkspace);
 app.post("/file/create", jwtVerify , fileController.createFile);
 

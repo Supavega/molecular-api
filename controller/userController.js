@@ -23,12 +23,23 @@ const login = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const result = await userModel.updateUser(req.body);
+        res.setHeader("Authorization", `Bearer ${result.token}`);
+        res.json({ message: "Updated in successfully", user: result.user});
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
 const checkToken = (req, res) => {
     res.json({ valid: true });
 }
 
 export {
     register, 
-    login, 
+    login,
+    update,
     checkToken
 }

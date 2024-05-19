@@ -33,6 +33,59 @@ const loginUser = async (userData) => {
     }
 };
 
+const updateUser = async (userData) => {
+    try {
+        const USERNAME = userData.username;
+        const NEWPASSWORD = userData.newPassword;
+        const NEWPASSWORDCONFIRM = userData.newPasswordConfirm;
+        const MAIL = userData.mail;
+        const PASSWORD = userData.password;
+
+        const USERID = userData.userId;
+
+        const filter = {
+            _id: USERID
+        };
+
+        const user = await User.findOne(filter);
+        
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        if (!PASSWORD) {
+            throw new Error("No password provided");
+        }
+
+        if (NEWPASSWORD && NEWPASSWORD !== NEWPASSWORDCONFIRM) {
+            throw new Error("New passwords do not match");
+        }
+
+        const passwordMatch = await bcrypt.compare(PASSWORD, user.password);
+        if (!passwordMatch) {
+            throw new Error("Password not matching");
+        }
+
+        const SALT = await bcrypt.genSalt();
+        const ENCRYPTEDNEWPASSWORD = await bcrypt.hash(NEWPASSWORD, SALT);
+
+        const newUser = {
+            username: USERNAME ? USERNAME : user.username,
+            mail: MAIL ? MAIL : user.mail,
+            password: NEWPASSWORD ? ENCRYPTEDNEWPASSWORD : user.password,
+            createdAt: user.createdAt,
+            updatedAt: Date.now()
+        }
+        
+        await User.findOneAndUpdate(filter, newUser);
+
+        return user;
+    } catch (error) {
+        console.error(error);
+        return { error: "Update failed" };
+    }
+};
+
 const generateAuthToken = (user) => {
     const token = jwt.sign({ _id: user._id.toString()}, process.env.SECRET_KEY);
     return token;
@@ -41,5 +94,6 @@ const generateAuthToken = (user) => {
 export {
     createUser,
     loginUser,
+    updateUser,
     generateAuthToken
 }
