@@ -12,7 +12,7 @@ export const createFile = (fileData) => {
 };
 
 export const deleteFile = async (fileId) => {
-  await File.findByIdAndDelete({ fileId });
+  await File.findByIdAndDelete( fileId );
 }
 
 export const updateFile = async (fileId, data) => {
@@ -30,5 +30,6 @@ export const getFileById = async (fileId) => {
 }
 
 export const getAllFiles = async () => {
-  return await File.find();
+  const result = await File.find();
+  return result;
 }

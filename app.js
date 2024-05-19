@@ -38,7 +38,7 @@ app.post("/file/create", jwtVerify , fileController.createFile);
 
 //DELETE Routes
 app.delete("/workspace", jwtVerify, workspaceController.deleteWorkspace);
-app.delete("/file", jwtVerify, fileController.deleteFile);
+app.delete("/file/:id", jwtVerify, fileController.deleteFile);
 
 //PUT Routes
 app.put("/workspace", jwtVerify, workspaceController.updateWorkspace);

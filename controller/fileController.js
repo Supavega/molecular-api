@@ -28,7 +28,7 @@ export const getFiles = async (req, res) => {
 }
 
 export const deleteFile = async (req, res) => {
-  const fileId = req.body.fileId;
+  const fileId = req.params.id;
   try {
     const deleteFile = await filemodel.deleteFile(fileId);
     res.status(200).send({
