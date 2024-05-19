@@ -1,4 +1,5 @@
 import * as filemodel from "../model/fileModel.js";
+import file from "../schema/file.js";
 
 export const createFile = async (req, res) => {
   const fileData = { ...req.body };
@@ -27,7 +28,7 @@ export const getFiles = async (req, res) => {
 }
 
 export const deleteFile = async (req, res) => {
-  const fileId = req.body.fileId;
+  const fileId = req.params.id;
   try {
     const deleteFile = await filemodel.deleteFile(fileId);
     res.status(200).send({
@@ -64,5 +65,16 @@ export const getFileById = async (req, res) => {
   } catch (err) {
     res.status(400).json({message: err.message});
   }
+}
 
+export const getAllFiles = async (req, res) => {
+  try {
+    const files = await filemodel.getAllFiles();
+    res.status(200).send({
+      message: "Files successfully retrieved",
+      data: files
+    })
+  } catch (err) {
+    res.status(400).json({message: err.message});
+  }
 }

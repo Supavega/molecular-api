@@ -12,7 +12,7 @@ export const createFile = (fileData) => {
 };
 
 export const deleteFile = async (fileId) => {
-  await File.findByIdAndDelete({ fileId });
+  await File.findByIdAndDelete( fileId );
 }
 
 export const updateFile = async (fileId, data) => {
@@ -26,5 +26,10 @@ export const getFiles = async (workspaceId) => {
 
 export const getFileById = async (fileId) => {
   const result = await File.findById(fileId);
+  return result;
+}
+
+export const getAllFiles = async () => {
+  const result = await File.find();
   return result;
 }
