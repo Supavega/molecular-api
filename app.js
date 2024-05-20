@@ -49,6 +49,6 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch((err) => console.log("Connexion à MongoDB échouée !", err));
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log("Serveur démarré sur le port 8080");
 })
