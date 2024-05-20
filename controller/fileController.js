@@ -63,13 +63,14 @@ export const getFileById = async (req, res) => {
       data: file
     })
   } catch (err) {
-    res.status(400).json({message: err.message});
+    res.status(400).json({message: err.message});x
   }
 }
 
 export const getAllFiles = async (req, res) => {
   try {
-    const files = await filemodel.getAllFiles();
+    const userId = req.params.id;
+    const files = await filemodel.getAllFiles(userId);
     res.status(200).send({
       message: "Files successfully retrieved",
       data: files
@@ -78,3 +79,4 @@ export const getAllFiles = async (req, res) => {
     res.status(400).json({message: err.message});
   }
 }
+
